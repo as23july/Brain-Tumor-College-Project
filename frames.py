@@ -1,47 +1,48 @@
 import tkinter
-from PIL import ImageTk
 from PIL import Image
+from PIL import ImageTk
+
 
 class Frames:
-    xAxis = 0
-    yAxis = 0
-    MainWindow = 0
-    MainObj = 0
+    Axis_X = 0
+    Axis_Y = 0
+    WindowMain = 0
+    objectMain = 0
     winFrame = object()
     btnClose = object()
-    btnView = object()
+    ViewBTN = object()
     image = object()
     method = object()
-    callingObj = object()
+    ObjectCall = object()
     labelImg = 0
 
-    def __init__(self, mainObj, MainWin, wWidth, wHeight, function, Object, xAxis=10, yAxis=10):
-        self.xAxis = xAxis
-        self.yAxis = yAxis
-        self.MainWindow = MainWin
-        self.MainObj = mainObj
-        self.MainWindow.title("Brain Tumor Detection")
-        if (self.callingObj != 0):
-            self.callingObj = Object
+    def __init__(self, objectMain, MainWin, wWidth, wHeight, function, Object, Axis_X=10, Axis_Y=10):
+        self.Axis_X = Axis_X
+        self.Axis_Y = Axis_Y
+        self.WindowMain = MainWin
+        self.objectMain = objectMain
+        self.WindowMain.title("Brain Tumor Detection")
+        if (self.ObjectCall != 0):
+            self.ObjectCall = Object
 
         if (function != 0):
             self.method = function
 
         global winFrame
-        self.winFrame = tkinter.Frame(self.MainWindow, width=wWidth, height=wHeight)
+        self.winFrame = tkinter.Frame(self.WindowMain, width=wWidth, height=wHeight)
         self.winFrame['borderwidth'] = 5
         self.winFrame['relief'] = 'ridge'
-        self.winFrame.place(x=xAxis, y=yAxis)
+        self.winFrame.place(x=Axis_X, y=Axis_Y)
 
         self.btnClose = tkinter.Button(self.winFrame, text="Close", width=8,
-                                      command=lambda: self.quitProgram(self.MainWindow))
+                                      command=lambda: self.quitProgram(self.WindowMain))
         self.btnClose.place(x=1020, y=600)
-        self.btnView = tkinter.Button(self.winFrame, text="View", width=8, command=lambda: self.NextWindow(self.method))
-        self.btnView.place(x=900, y=600)
+        self.ViewBTN = tkinter.Button(self.winFrame, text="View", width=9, command=lambda: self.NextWindow(self.method))
+        self.ViewBTN.place(x=900, y=600)
 
 
     def setCallObject(self, obj):
-        self.callingObj = obj
+        self.ObjectCall = obj
 
 
     def setMethod(self, function):
@@ -49,8 +50,8 @@ class Frames:
 
 
     def quitProgram(self, window):
-        global MainWindow
-        self.MainWindow.destroy()
+        global WindowMain
+        self.WindowMain.destroy()
 
 
     def getFrames(self):
@@ -59,7 +60,7 @@ class Frames:
 
 
     def unhide(self):
-        self.winFrame.place(x=self.xAxis, y=self.yAxis)
+        self.winFrame.place(x=self.Axis_X, y=self.Axis_Y)
 
 
     def hide(self):
@@ -67,18 +68,18 @@ class Frames:
 
 
     def NextWindow(self, methodToExecute):
-        listWF = list(self.MainObj.listOfWinFrame)
+        listWF = list(self.objectMain.listOfWinFrame)
 
-        if (self.method == 0 or self.callingObj == 0):
-            print("Calling Method or the Object from which Method is called is 0")
+        if (self.method == 0 or self.ObjectCall == 0):
+            print("Calling Object/Method")
             return
 
         if (self.method != 1):
             methodToExecute()
-        if (self.callingObj == self.MainObj.DT):
-            img = self.MainObj.DT.getImage()
+        if (self.ObjectCall == self.objectMain.DT):
+            img = self.objectMain.DT.getImage()
         else:
-            print("Error: No specified object for getImage() function")
+            print("Err = No getImage() function")
 
         jpgImg = Image.fromarray(img)
         current = 0
@@ -92,7 +93,7 @@ class Frames:
             listWF[current].unhide()
             listWF[current].readImage(jpgImg)
             listWF[current].displayImage()
-            self.btnView['state'] = 'disable'
+            self.ViewBTN['state'] = 'disable'
         else:
             listWF[current + 1].unhide()
             listWF[current + 1].readImage(jpgImg)
@@ -103,7 +104,7 @@ class Frames:
 
     def removeComponent(self):
         self.btnClose.destroy()
-        self.btnView.destroy()
+        self.ViewBTN.destroy()
 
 
     def readImage(self, img):
