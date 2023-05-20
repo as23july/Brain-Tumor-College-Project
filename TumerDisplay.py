@@ -2,7 +2,7 @@ import numpy as np
 import cv2 as cv
 
 
-class DisplayTumor:
+class TumerDisplay:
     ImgCur = 0
     Imgs = 0
 
@@ -21,7 +21,7 @@ class DisplayTumor:
         opening = cv.morphologyEx(self.resh, cv.MORPH_OPEN, self.kernel, iterations=2)
         self.ImgCur = opening
 
-    def displayTumor(self):
+    def TumerDisplay(self):
         # background area color
         sure_bg = cv.dilate(self.ImgCur, self.kernel, iterations=3)
 

@@ -4,24 +4,27 @@ from PIL import ImageTk
 
 
 class Frames:
-    Axis_X = 0
-    Axis_Y = 0
-    WindowMain = 0
-    objectMain = 0
-    winFrame = object()
-    btnClose = object()
-    ViewBTN = object()
-    image = object()
+    
     method = object()
+    winFrame = object()
+    
+    Axis_X = 0
+    btnClose = object()
+    Axis_Y = 0
+    ViewBTN = object()
+    WinM1 = 0
+    image = object()
+    
+    objectMain = 0
     ObjectCall = object()
     labelImg = 0
 
     def __init__(self, objectMain, MainWin, wWidth, wHeight, function, Object, Axis_X=10, Axis_Y=10):
         self.Axis_X = Axis_X
         self.Axis_Y = Axis_Y
-        self.WindowMain = MainWin
+        self.WinM1 = MainWin
         self.objectMain = objectMain
-        self.WindowMain.title("Brain Tumor Detection")
+        self.WinM1.title("Brain Tumor Detection")
         if (self.ObjectCall != 0):
             self.ObjectCall = Object
 
@@ -29,13 +32,13 @@ class Frames:
             self.method = function
 
         global winFrame
-        self.winFrame = tkinter.Frame(self.WindowMain, width=wWidth, height=wHeight)
+        self.winFrame = tkinter.Frame(self.WinM1, width=wWidth, height=wHeight)
         self.winFrame['borderwidth'] = 5
         self.winFrame['relief'] = 'ridge'
         self.winFrame.place(x=Axis_X, y=Axis_Y)
 
         self.btnClose = tkinter.Button(self.winFrame, text="Close", width=8,
-                                      command=lambda: self.quitProgram(self.WindowMain))
+                                      command=lambda: self.quitProgram(self.WinM1))
         self.btnClose.place(x=1020, y=600)
         self.ViewBTN = tkinter.Button(self.winFrame, text="View", width=9, command=lambda: self.NextWindow(self.method))
         self.ViewBTN.place(x=900, y=600)
@@ -50,8 +53,8 @@ class Frames:
 
 
     def quitProgram(self, window):
-        global WindowMain
-        self.WindowMain.destroy()
+        global WinM1
+        self.WinM1.destroy()
 
 
     def getFrames(self):
@@ -68,7 +71,7 @@ class Frames:
 
 
     def NextWindow(self, methodToExecute):
-        listWF = list(self.objectMain.listOfWinFrame)
+        listWF = list(self.objectMain.Frlist)
 
         if (self.method == 0 or self.ObjectCall == 0):
             print("Calling Object/Method")

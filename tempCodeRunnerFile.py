@@ -2,8 +2,8 @@ import tkinter
 from PIL import Image
 from tkinter import filedialog
 import cv2 as cv
-from frames import *
-from displayTumor import *
+from fr import *
+from TumerDisplay import *
 from TumorPridiction import *
 
 
